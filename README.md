@@ -1,2 +1,2 @@
 # AdvancedAlgorithms
-Code from my advanced algorithms class
+Code for my advanced algorithms class
