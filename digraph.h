@@ -84,6 +84,8 @@ public:
         return ans;
     }
 
+    // pre: none
+    // post: returns the set of vertices in the graph
     VertexSet V() const
     {
         VertexSet ans;
@@ -92,8 +94,10 @@ public:
 
         return ans;
     }
+   
 
-    //returns set of all adjacent vertices
+    // pre: v is a vertex
+    // post: returns the set of vertices adjacent to v
     VertexSet Adj(const Vertex & v) const
     {
         assert(isVertex(v));
@@ -219,6 +223,8 @@ public:
 
     // mutator functions
 
+    // pre: none
+    // post: returns false if v is already a vertex; otherwise adds vertex v and returns true
     void add_vertex(const Vertex & v)
     {
         assert(!isVertex(v));
@@ -226,12 +232,16 @@ public:
         _t[v] = VertexSet();
     }
 
+    // pre: v and w are different vertices
+    // post: adds edge {v, w} if it doesn't exist; otherwise do nothing
     void add_edge(const Vertex & s, const Vertex & d)
     {
         assert(isVertex(s) && isVertex(d));
         _t[s].insert(d);
     }
 
+    // pre: v and w are vertices
+    // post: remove edge {v, w} if it exists; otherwise do nothing
     void remove_edge(const Vertex &s, const Vertex &d)
     {
         assert(isVertex(s) && isVertex(d));
