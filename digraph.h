@@ -117,6 +117,34 @@ public:
         return R;
     }
 
+    //mutator functions
+    
+    // pre: none
+    // post: returns false if v is already a vertex; otherwise adds vertex v and returns true
+    void add_vertex(const Vertex & v)
+    {
+        assert(!isVertex(v));
+        _t[v] = VertexSet();
+    }
+
+    // pre: v and w are different vertices
+    // post: adds edge {v, w} if it doesn't exist; otherwise do nothing
+    void add_edge(const Vertex & s, const Vertex & d)
+    {
+        assert(isVertex(s) && isVertex(d));
+        _t[s].insert(d);
+    }
+
+    // pre: v and w are vertices
+    // post: remove edge {v, w} if it exists; otherwise do nothing
+    void remove_edge(const Vertex &s, const Vertex &d)
+    {
+        assert(isVertex(s) && isVertex(d));
+        _t[s].erase(d);
+    }
+
+    //connected component algorithms
+    
     //DFS for Kosaraju's connected components algorithm
     void Kdfs(const Vertex & v,
               V2I & visited,
@@ -127,10 +155,8 @@ public:
         {
             if (visited.count(w) == 0)
                 Kdfs(w, visited, lv);
-
         }
         lv.push_front(v);
-
     }
     
     //Kosaraju's connected components algorithm
@@ -158,9 +184,7 @@ public:
                     ans[w] = name;
                 ++name;
             }
-
         }
-
         return ans;
     }
 
@@ -181,9 +205,7 @@ public:
         {
             if (pre.count(w) == 0)
                 Tdfs(w, pre, low, ans, time, name, S);
-            low[v] = std::min(low[v], low[w]);   // no need to worry about cross edge
-                                                 // because processed connected components
-                                                 // have low values set to n
+            low[v] = std::min(low[v], low[w]); 
         }
 
 
@@ -199,14 +221,12 @@ public:
                 low[top] = _n;   // disable cross edges
             } while (top != v);
             ++name;
-
         }
     }
 
     //Tarjan's connected component algorithm
     V2I Tscc() const
     {
-
         V2I pre, low, ans;
         std::size_t time(1), name(1);
         std::stack<Vertex> S;
@@ -217,38 +237,7 @@ public:
                 Tdfs(v, pre, low, ans, time, name, S);
         }
         return ans;
-
-
     }
-
-    // mutator functions
-
-    // pre: none
-    // post: returns false if v is already a vertex; otherwise adds vertex v and returns true
-    void add_vertex(const Vertex & v)
-    {
-        assert(!isVertex(v));
-
-        _t[v] = VertexSet();
-    }
-
-    // pre: v and w are different vertices
-    // post: adds edge {v, w} if it doesn't exist; otherwise do nothing
-    void add_edge(const Vertex & s, const Vertex & d)
-    {
-        assert(isVertex(s) && isVertex(d));
-        _t[s].insert(d);
-    }
-
-    // pre: v and w are vertices
-    // post: remove edge {v, w} if it exists; otherwise do nothing
-    void remove_edge(const Vertex &s, const Vertex &d)
-    {
-        assert(isVertex(s) && isVertex(d));
-        _t[s].erase(d);
-    }
-
-
 
 
 private:
